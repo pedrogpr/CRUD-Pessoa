@@ -61,7 +61,7 @@ function App() {
             <Home />
           } />
           <Route path="/adicionar" element={
-            <Add onAdd={onAdd} props={pessoas} />
+            <Add onAdd={onAdd} />
           } />
           <Route path="/adicionar/:id" element={
             <Add onUpdate={onUpdate} />

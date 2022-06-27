@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import './Add.css';
 
-function Add({ props, onAdd, onUpdate }) {
+function Add({ onAdd, onUpdate }) {
 
   const [pessoaAtualizada, setPessoaAtualizada] = useState({});
 
