@@ -1,16 +1,17 @@
+import { ButtonUnstyled } from '@mui/base';
 import { Button } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
-export function Pessoa({ props, onDelete, onLoad }) {
+export function Pessoa({ props, onDelete }) {
 
   const handleOnDelete = () => {
     onDelete(props.id);
     window.location.reload();
   }
 
-  const handleOnLoadContato = () => {
-    onLoad(props.id);
-    window.location.href += 'adicionar'
+  const onNavigate = () => {
+    window.location.href += `adicionar/${props.id}`
   }
 
   //let url = window.location.href + 'adicionar'
@@ -23,9 +24,9 @@ export function Pessoa({ props, onDelete, onLoad }) {
         <td>{props.email}</td>
         <td>{props.cpf}</td>
         <td>
-            <Button onClick={handleOnLoadContato}>
-              Alterar
-            </Button>
+          <Button onClick={onNavigate}>
+            Alterar
+          </Button>
           <Button style={{ marginLeft: 12 }} variant="danger" onClick={handleOnDelete}>
             Excluir
           </Button>

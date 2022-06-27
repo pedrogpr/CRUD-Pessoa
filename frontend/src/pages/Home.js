@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Home(onLoad) {
+function Home() {
 
   const [pessoas, setPessoas] = useState([]);
+  
 
   useEffect(() => {
     fetchData();
@@ -35,6 +36,13 @@ function Home(onLoad) {
       .catch(err => console.log(err))
   }
 
+  // const onLoad = async (id) => {
+  //   await fetch(`http://localhost:8080/pessoa/${id}`)
+  //     .then(res => res.json())
+  //     .then(dados => setPessoaAtualizada(dados))
+  //     .catch(err => console.log(err))
+  // }
+
   return (
     <div style={{
       marginTop: 50,
@@ -55,7 +63,7 @@ function Home(onLoad) {
           {
             pessoas.map(pessoa => (
               <Pessoa props={pessoa} key={pessoa.id}
-                onDelete={onDelete} onLoad={onLoad} />
+                onDelete={onDelete} />
             ))
           }
         </tbody>

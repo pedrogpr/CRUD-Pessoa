@@ -10,7 +10,6 @@ import { useState } from "react";
 function App() {
 
   const [pessoas, setPessoas] = useState([]);
-  const [pessoaAtualizada, setPessoaAtualizada] = useState({});
 
   const onAdd = async (pessoa) => {
     await fetch('http://localhost:8080/pessoa', {
@@ -33,10 +32,23 @@ function App() {
       .catch(err => console.log(err))
   }
 
-  const loadPessoa = async (id) => {
-    await fetch(`http://localhost:8080/pessoa/${id}`)
-      .then(res => res.json())
-      .then(dados => setPessoaAtualizada(dados))
+  const onUpdate = async (pessoaAtualizada) => {
+    await fetch(`http://localhost:8080/pessoa/${pessoaAtualizada.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(pessoaAtualizada),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      }
+    })
+      .then(res => {
+        setPessoas(pessoas.filter(pessoa => {
+          return pessoa.id !== pessoaAtualizada.id;
+        }))
+        return res.json();
+      })
+      .then(dados => {
+        setPessoas(pessoas => [...pessoas, dados])
+      })
       .catch(err => console.log(err))
   }
 
@@ -46,10 +58,13 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={
-          <Home onLoad={loadPessoa}/>
+            <Home />
           } />
           <Route path="/adicionar" element={
-            <Add onAdd={onAdd} props={pessoas} pessoaAlt={pessoaAtualizada} />
+            <Add onAdd={onAdd} props={pessoas} />
+          } />
+          <Route path="/adicionar/:id" element={
+            <Add onUpdate={onUpdate} />
           } />
         </Routes>
       </Router>
