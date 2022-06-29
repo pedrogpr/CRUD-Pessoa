@@ -2,10 +2,20 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import './Add.css';
+import { validar } from "../utils/validacao";
 
 function Add({ onAdd, onUpdate }) {
 
-  const [pessoaAtualizada, setPessoaAtualizada] = useState({});
+  //const [pessoaAtualizada, setPessoaAtualizada] = useState({});
+
+  const [nome, setNome] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [email, setEmail] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [endereco, setEndereco] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [estado, setEstado] = useState('')
 
   const { id } = useParams();
   const idNumber = id ? Number.parseInt(id, 10) : null
@@ -18,35 +28,58 @@ function Add({ onAdd, onUpdate }) {
   const fetchData = async () => {
     await fetch(`http://localhost:8080/pessoa/${idNumber}`)
       .then(res => res.json())
-      .then(dados => setPessoaAtualizada(dados))
+      .then(dados => {
+        setNome(dados.nome)
+        setTelefone(dados.telefone)
+        setEmail(dados.email)
+        setCpf(dados.cpf)
+        setEndereco(dados.endereco)
+        setBairro(dados.bairro)
+        setCidade(dados.cidade)
+        setEstado(dados.estado)
+      })
       .catch(err => console.log(err))
   }
 
   const handleOnAdd = (e) => {
-    onAdd({
-      nome: e.target.nome.value,
-      telefone: e.target.telefone.value,
-      email: e.target.email.value,
-      cpf: e.target.cpf.value,
-      endereco: e.target.endereco.value,
-      bairro: e.target.bairro.value,
-      cidade: e.target.cidade.value,
-      estado: e.target.estado.value
-    })
+
+    if (!validar(e.target.cpf.value)) {
+      alert("Insira um número de cadastro válido!")
+      e.preventDefault();
+      return;
+    } else {
+      onAdd({
+        nome: nome,
+        telefone: telefone,
+        email: email,
+        cpf: cpf,
+        endereco: endereco,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado
+      })
+    }
   }
 
   const handleOnUpdate = (e) => {
-    onUpdate({
-      id: pessoaAtualizada.id,
-      nome: e.target.nome.value,
-      telefone: e.target.telefone.value,
-      email: e.target.email.value,
-      cpf: e.target.cpf.value,
-      endereco: e.target.endereco.value,
-      bairro: e.target.bairro.value,
-      cidade: e.target.cidade.value,
-      estado: e.target.estado.value
-    });
+
+    if (!validar(e.target.cpf.value)) {
+      alert("Insira um número de cadastro válido!")
+      e.preventDefault();
+      return;
+    } else {
+      onUpdate({
+        id: idNumber,
+        nome: nome,
+        telefone: telefone,
+        email: email,
+        cpf: cpf,
+        endereco: endereco,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado
+      });
+    }
   }
 
   const handleOnOption = (e) => {
@@ -66,45 +99,61 @@ function Add({ onAdd, onUpdate }) {
       <Form onSubmit={handleOnOption}>
         <div className="separador">
           <Form.Group className="mb-3" controlId="formNome">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.nome : "Nome"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o nome" name="nome" />
+            <Form.Label>Nome</Form.Label>
+            <Form.Control type="text" placeholder="Digite o nome" name="nome"
+              value={nome} onChange={e => setNome(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formTelefone">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.telefone : "Telefone"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o telefone" name="telefone" />
+            <Form.Label>Telefone</Form.Label>
+            <Form.Control type="text" placeholder="Digite o telefone" name="telefone"
+              value={telefone} onChange={e => setTelefone(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.email : "E-mail"}</Form.Label>
-            <Form.Control type="email" placeholder="Digite o e-mail" name="email" />
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control type="email" placeholder="Digite o e-mail" name="email"
+              value={email} onChange={e => setEmail(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formCpf">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.cpf : "CPF"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o CPF" name="cpf" />
+            <Form.Label>CPF</Form.Label>
+            <Form.Control type="text" placeholder="Digite o CPF" name="cpf"
+              value={cpf} onChange={e => setCpf(e.target.value)}
+            />
           </Form.Group>
         </div>
 
         <div className="separador" style={{ marginLeft: 5 + '%' }}>
           <Form.Group className="mb-3" controlId="formEndereco">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.endereco : "Endereço"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o endereço" name="endereco" />
+            <Form.Label>Endereço</Form.Label>
+            <Form.Control type="text" placeholder="Digite o endereço" name="endereco"
+              value={endereco} onChange={e => setEndereco(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBairro">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.bairro : "Bairro"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o bairro" name="bairro" />
+            <Form.Label>Bairro</Form.Label>
+            <Form.Control type="text" placeholder="Digite o bairro" name="bairro"
+              value={bairro} onChange={e => setBairro(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formCidade">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.cidade : "Cidade"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite a cidade" name="cidade" />
+            <Form.Label>Cidade</Form.Label>
+            <Form.Control type="text" placeholder="Digite a cidade" name="cidade"
+              value={cidade} onChange={e => setCidade(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formEstado">
-            <Form.Label>{idNumber !== null ? pessoaAtualizada.estado : "Estado"}</Form.Label>
-            <Form.Control type="text" placeholder="Digite o estado" name="estado" />
+            <Form.Label>Estado</Form.Label>
+            <Form.Control type="text" placeholder="Digite o estado" name="estado"
+              value={estado} onChange={e => setEstado(e.target.value)}
+            />
           </Form.Group>
         </div>
 

@@ -1,7 +1,4 @@
-import { ButtonUnstyled } from '@mui/base';
 import { Button } from 'react-bootstrap';
-import { Navigate } from 'react-router-dom';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function Pessoa({ props, onDelete }) {
 
@@ -13,8 +10,6 @@ export function Pessoa({ props, onDelete }) {
   const onNavigate = () => {
     window.location.href += `adicionar/${props.id}`
   }
-
-  //let url = window.location.href + 'adicionar'
 
   return (
     <>

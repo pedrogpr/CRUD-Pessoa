@@ -1,4 +1,4 @@
-import { Pessoa } from '../components/Pessoa';
+import { Pessoa } from '../Components/Pessoa';
 import { Table } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import React from 'react'
@@ -35,13 +35,6 @@ function Home() {
       })
       .catch(err => console.log(err))
   }
-
-  // const onLoad = async (id) => {
-  //   await fetch(`http://localhost:8080/pessoa/${id}`)
-  //     .then(res => res.json())
-  //     .then(dados => setPessoaAtualizada(dados))
-  //     .catch(err => console.log(err))
-  // }
 
   return (
     <div style={{
