@@ -11,7 +11,7 @@ function App() {
 
   const [pessoas, setPessoas] = useState([]);
 
-  const onAdd = async (pessoa) => {
+  const onAdd = async (pessoa, e) => {
     await fetch('http://localhost:8080/pessoa', {
       method: 'POST',
       body: JSON.stringify(pessoa),
@@ -30,9 +30,13 @@ function App() {
         setPessoas(pessoas => [...pessoas, dados])
       })
       .catch(err => console.log(err))
+
+      // alert("Cadastro adicionado!")
+      // e.preventDefault();
+      //window.history.back();
   }
 
-  const onUpdate = async (pessoaAtualizada) => {
+  const onUpdate = async (pessoaAtualizada, e) => {
     await fetch(`http://localhost:8080/pessoa/${pessoaAtualizada.id}`, {
       method: 'PUT',
       body: JSON.stringify(pessoaAtualizada),
@@ -50,6 +54,10 @@ function App() {
         setPessoas(pessoas => [...pessoas, dados])
       })
       .catch(err => console.log(err))
+
+      // alert("Cadastro salvo!")
+      // e.preventDefault();
+      // window.history.back();
   }
 
   return (

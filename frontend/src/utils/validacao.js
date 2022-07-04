@@ -1,8 +1,9 @@
 export function validar(cadastro) {
 
-  if (cadastro.length === 11) {
-    cadastro = cadastro.replace(/[^\d]+/g, '');
+  cadastro = cadastro.replace(/[^\d]+/g, '');
 
+  console.log(cadastro.length)
+  if (cadastro.length === 11) {
     // Elimina CPFs invalidos conhecidos	
     if (cadastro === "00000000000" ||
       cadastro === "11111111111" ||
@@ -37,8 +38,6 @@ export function validar(cadastro) {
   }
 
   else if (cadastro.length === 14) {
-    cadastro = cadastro.replace(/[^\d]+/g, '');
-
     // Elimina cadastros invalidos conhecidos
     if (cadastro === "00000000000000" ||
       cadastro === "11111111111111" ||

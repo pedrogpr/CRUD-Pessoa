@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import './Add.css';
 import { validar } from "../utils/validacao";
 
@@ -16,6 +16,7 @@ function Add({ onAdd, onUpdate }) {
   const [bairro, setBairro] = useState('')
   const [cidade, setCidade] = useState('')
   const [estado, setEstado] = useState('')
+  const [mostrar, setMostrar] = useState(false)
 
   const { id } = useParams();
   const idNumber = id ? Number.parseInt(id, 10) : null
@@ -48,6 +49,7 @@ function Add({ onAdd, onUpdate }) {
       e.preventDefault();
       return;
     } else {
+      setMostrar(true)
       onAdd({
         nome: nome,
         telefone: telefone,
@@ -57,7 +59,7 @@ function Add({ onAdd, onUpdate }) {
         bairro: bairro,
         cidade: cidade,
         estado: estado
-      })
+      }, e)
     }
   }
 
@@ -78,7 +80,7 @@ function Add({ onAdd, onUpdate }) {
         bairro: bairro,
         cidade: cidade,
         estado: estado
-      });
+      }, e);
     }
   }
 
@@ -168,6 +170,15 @@ function Add({ onAdd, onUpdate }) {
           </Button>
         </div>
       </Form>
+
+      {mostrar && (
+        <div>
+          <Alert variant="success">
+            Cadastro adicionado!
+          </Alert>
+        </div>
+      )}
+
     </div>
   )
 }
