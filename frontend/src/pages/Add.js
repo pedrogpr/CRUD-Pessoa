@@ -70,6 +70,7 @@ function Add({ onAdd, onUpdate }) {
       e.preventDefault();
       return;
     } else {
+      setMostrar(true)
       onUpdate({
         id: idNumber,
         nome: nome,
@@ -172,13 +173,13 @@ function Add({ onAdd, onUpdate }) {
       </Form>
 
       {mostrar && (
-        <div>
+        <div className="centro-cadastro">
           <Alert variant="success">
-            Cadastro adicionado!
+            <strong>{ idNumber ? "Cadastro alterado com sucesso!" : "Cadastro adicionado com sucesso!"}</strong>
           </Alert>
         </div>
       )}
-
+      
     </div>
   )
 }
